@@ -2,7 +2,7 @@
   "name": "",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
+  "main": "main.js",
   "private": true,
   "scripts": {
   	"dev": "node esbuild.config.mjs",
@@ -10,5 +10,5 @@
   	"pub": "npm run build & npm publish"
   },
   "author": "qql2",
-  "types": "src/main.d.ts"
+  "types": "main.d.ts"
 }
