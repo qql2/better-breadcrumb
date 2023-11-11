@@ -9,7 +9,7 @@
   	"pub": "npm run build & npm publish"
   },
   "author": "qql2",
-  "types": "main.d.ts"
+  "types": "main.d.ts",
   "dependencies": {
     "obsidian": "latest"
   }
