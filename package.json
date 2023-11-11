@@ -11,4 +11,7 @@
   },
   "author": "qql2",
   "types": "main.d.ts"
+  "dependencies": {
+    "obsidian": "lates"
+  }
 }
