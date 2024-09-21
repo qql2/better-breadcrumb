@@ -17,7 +17,7 @@ await esbuild.build({
         js: banner,
     },
     plugins: [
-        Vue({ isProd: true })
+        Vue({ isProd: prod })
     ],
     entryPoints: ['./src/main.ts'],
     bundle: true,
@@ -48,7 +48,7 @@ await esbuild.build({
         ...builtins],
     format: 'cjs',
     watch: !prod,
-    target: 'es2020',
+    target: 'es2021',
     logLevel: "info",
     sourcemap: prod ? false : 'inline',
     minify: prod ? true : false,

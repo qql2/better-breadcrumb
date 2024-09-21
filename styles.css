@@ -3,5 +3,14 @@
 h2[data-v-f8994186] {
   color: lightcoral;
 }
+#container[data-v-3ca3ba10] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#submit[data-v-3ca3ba10] {
+  margin-top: 10px;
+}
 
 /* src/main.css */

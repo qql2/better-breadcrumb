@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"build:type": "tsc --declaration --declarationMap --emitDeclarationOnly --isolatedModules false  -outFile index.d.ts"
 	},
 	"keywords": [],
 	"author": "",
@@ -24,6 +25,7 @@
 		"hash-sum": "^2.0.0",
 		"obsidian": "latest",
 		"tslib": "2.3.1",
-		"typescript": "4.4.4"
+		"typescript": "5.5.4",
+		"breadcrumbs": "file:../../../../breadcrumbs"
 	}
 }

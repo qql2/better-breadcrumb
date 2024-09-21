@@ -1,24 +1,16 @@
-import {
-	App,
-	Modal,
-	Notice,
-	Plugin,
-	PluginSettingTab,
-	Setting,
-} from "obsidian";
+import { App, Modal, Plugin, SuggestModal } from "obsidian";
 
 import { MyView, VIEW_TYPE } from "./view";
-import { createApp } from "vue";
-import App from "./App.vue";
 import { BT_BCAPI } from "./BT_BCAPI";
-import type { BCAPI } from "breadcrumbs/src/api";
+import type { BCAPI } from "breadcrumbs";
+import { createApp } from "vue";
+import { default as NoteFilterComponent } from "./NoteFilter.vue";
 
-interface MyPluginSettings {
-	mySetting: string;
-}
+type MyPluginSettings = typeof DEFAULT_SETTINGS;
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: "default",
+const DEFAULT_SETTINGS = {
+	linkTypeHistory: "",
+	fromNoteHistory: "",
 };
 
 declare global {
@@ -31,16 +23,28 @@ declare global {
 export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
 	unloadFn: Function[] = [];
+	BT_BCAPI: BT_BCAPI;
 	async onload() {
 		await this.loadSettings();
-
+		this.BT_BCAPI = BT_BCAPI.getBT_BCAPI(this);
 		this.registerView(VIEW_TYPE, (leaf) => new MyView(leaf));
 
-		this.addRibbonIcon("dice", "Open my view", (evt) => {
-			this.activateView();
-		});
+		// this.addRibbonIcon("dice", "Open my view", (evt) => {
+		// 	this.activateView();
+		// });
 
 		this.exposeAPI();
+		this.addCommand({
+			id: "Filter notes by type link",
+			name: "Filter notes by type link",
+			callback: () => {
+				this.openNoteFilter();
+			},
+		});
+	}
+	openNoteFilter() {
+		let modal = new NoteFilter(this.app, this);
+		modal.open();
 	}
 	exposeAPI() {
 		window.BT_BCAPI = BT_BCAPI.getBT_BCAPI(this);
@@ -74,5 +78,21 @@ export default class MyPlugin extends Plugin {
 		this.app.workspace.revealLeaf(
 			this.app.workspace.getLeavesOfType(VIEW_TYPE)[0]
 		);
+	}
+}
+
+class NoteFilter extends Modal {
+	constructor(app: App, protected plugin: Plugin) {
+		super(app);
+	}
+	onOpen() {
+		let { contentEl } = this;
+		let vueApp = createApp(NoteFilterComponent);
+		vueApp.provide("plugin", this.plugin);
+		vueApp.mount(contentEl);
+	}
+	onClose() {
+		let { contentEl } = this;
+		contentEl.empty();
 	}
 }
