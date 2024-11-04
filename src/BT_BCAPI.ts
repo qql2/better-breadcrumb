@@ -1,5 +1,5 @@
 import { App, getFrontMatterInfo, parseYaml, Plugin, TFile } from "obsidian";
-import MyPlugin from "./main";
+import MyPlugin from "./better-breadcrumb";
 import { YAML } from "qql1-yaml";
 import { ModifyFile } from "obsidian-modify-file";
 import { get_all_files } from "breadcrumbs/src/graph/builders/explicit/files";

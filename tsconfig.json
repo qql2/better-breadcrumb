@@ -11,8 +11,8 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "emitDeclarationOnly": true,
-        "outFile": "./main.js",
-        "forceConsistentCasingInFileNames": true,
+    "outFile": "./index.js",
+    "forceConsistentCasingInFileNames": true,
     "jsx":"preserve",
     "lib": [
       "DOM",
@@ -22,6 +22,6 @@
     ]
   },
   "include": [
-    "src/packageName.ts"
+    "src/better-breadcrumb.ts"
   ],
 }

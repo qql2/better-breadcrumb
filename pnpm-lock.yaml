@@ -182,9 +182,9 @@ packages:
     resolution: {integrity: sha512-YTnYtra7W9e6/oAZEHj0bJehPRUlLH9/fbpT5LfB0NhQXyALCRkRs3zH9v07IYhkgpqX6Z78FnuccZr/l4Fs4Q==}
     engines: {node: '>=6.9.0'}
 
-  '@codemirror/language@https://codeload.github.com/lishid/cm-language/tar.gz/2644bfc27afda707a7e1f3aedaf3ca7120f63cd9':
-    resolution: {tarball: https://codeload.github.com/lishid/cm-language/tar.gz/2644bfc27afda707a7e1f3aedaf3ca7120f63cd9}
-    version: 6.10.1
+  '@codemirror/language@https://codeload.github.com/lishid/cm-language/tar.gz/be84c19d93fa87ac4e43c1a5874b1d228b5b2a89':
+    resolution: {tarball: https://codeload.github.com/lishid/cm-language/tar.gz/be84c19d93fa87ac4e43c1a5874b1d228b5b2a89}
+    version: 6.10.3
 
   '@codemirror/state@6.4.1':
     resolution: {integrity: sha512-QkEyUiLhsJoZkbumGZlswmAhA7CBU02Wrz7zvH4SrcifbsqwlXShVXg65f3v/ts57W3dqyamEriMhij1Z3Zz4A==}
@@ -708,6 +708,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -997,9 +998,9 @@ packages:
       '@codemirror/state': ^6.0.0
       '@codemirror/view': ^6.0.0
 
-  obsidian@https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/8be9ff1e1b708b9451f35ce2df33e3983e88565b:
-    resolution: {tarball: https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/8be9ff1e1b708b9451f35ce2df33e3983e88565b}
-    version: 1.6.6
+  obsidian@https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/23947b58d372ea02225324308e31d36b4aa95869:
+    resolution: {tarball: https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/23947b58d372ea02225324308e31d36b4aa95869}
+    version: 1.7.2
     peerDependencies:
       '@codemirror/state': ^6.0.0
       '@codemirror/view': ^6.0.0
@@ -1425,7 +1426,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
-  '@codemirror/language@https://codeload.github.com/lishid/cm-language/tar.gz/2644bfc27afda707a7e1f3aedaf3ca7120f63cd9':
+  '@codemirror/language@https://codeload.github.com/lishid/cm-language/tar.gz/be84c19d93fa87ac4e43c1a5874b1d228b5b2a89':
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.32.0
@@ -2250,7 +2251,7 @@ snapshots:
 
   obsidian-daily-notes-interface@0.8.4(@codemirror/state@6.4.1)(@codemirror/view@6.32.0):
     dependencies:
-      obsidian: https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/8be9ff1e1b708b9451f35ce2df33e3983e88565b(@codemirror/state@6.4.1)(@codemirror/view@6.32.0)
+      obsidian: https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/23947b58d372ea02225324308e31d36b4aa95869(@codemirror/state@6.4.1)(@codemirror/view@6.32.0)
       tslib: 2.1.0
     transitivePeerDependencies:
       - '@codemirror/state'
@@ -2258,7 +2259,7 @@ snapshots:
 
   obsidian-dataview@0.5.67:
     dependencies:
-      '@codemirror/language': https://codeload.github.com/lishid/cm-language/tar.gz/2644bfc27afda707a7e1f3aedaf3ca7120f63cd9
+      '@codemirror/language': https://codeload.github.com/lishid/cm-language/tar.gz/be84c19d93fa87ac4e43c1a5874b1d228b5b2a89
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.32.0
       emoji-regex: 10.3.0
@@ -2276,7 +2277,7 @@ snapshots:
       '@types/codemirror': 5.60.8
       moment: 2.29.4
 
-  obsidian@https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/8be9ff1e1b708b9451f35ce2df33e3983e88565b(@codemirror/state@6.4.1)(@codemirror/view@6.32.0):
+  obsidian@https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/23947b58d372ea02225324308e31d36b4aa95869(@codemirror/state@6.4.1)(@codemirror/view@6.32.0):
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.32.0

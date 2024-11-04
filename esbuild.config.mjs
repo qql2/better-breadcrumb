@@ -19,7 +19,7 @@ await esbuild.build({
     plugins: [
         Vue({ isProd: prod })
     ],
-    entryPoints: ['./src/main.ts'],
+    entryPoints: ['./src/better-breadcrumb.ts'],
     bundle: true,
     external: [
         'obsidian',
