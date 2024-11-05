@@ -2,7 +2,7 @@ import { App, Modal, Plugin, SuggestModal } from "obsidian";
 
 import { MyView, VIEW_TYPE } from "./view";
 import { BT_BCAPI } from "./BT_BCAPI";
-import type { BCAPI } from "breadcrumbs";
+import type { BCAPI } from "breadcrumbs/src/api";
 import { createApp } from "vue";
 import { default as NoteFilterComponent } from "./NoteFilter.vue";
 
@@ -16,7 +16,7 @@ const DEFAULT_SETTINGS = {
 declare global {
 	interface Window {
 		BCAPI: BCAPI;
-		BT_BCAPI: BT_BCAPI;
+		BT_BCAPI?: BT_BCAPI;
 	}
 }
 
@@ -69,7 +69,7 @@ export default class MyPlugin extends Plugin {
 	}
 	async activateView() {
 		if (this.app.workspace.getLeavesOfType(VIEW_TYPE).length === 0) {
-			await this.app.workspace.getRightLeaf(false).setViewState({
+			await this.app.workspace.getRightLeaf(false)?.setViewState({
 				type: VIEW_TYPE,
 				active: true,
 			});

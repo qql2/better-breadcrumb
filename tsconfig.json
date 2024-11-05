@@ -7,21 +7,21 @@
     "target": "ES2022",
     "allowJs": true,
     "noImplicitAny": true,
-    "declaration": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "isolatedModules": true,
+    "strictNullChecks": true,
+    "declaration": true,
     "emitDeclarationOnly": true,
-    "outFile": "./index.js",
-    "forceConsistentCasingInFileNames": true,
-    "jsx":"preserve",
+    "skipLibCheck": true,
     "lib": [
       "DOM",
       "ES5",
       "ES6",
       "ES7"
-    ]
+    ],
   },
   "include": [
-    "src/better-breadcrumb.ts"
-  ],
+    "src/**/*",
+  ]
 }

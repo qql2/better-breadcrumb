@@ -2,6 +2,9 @@ import esbuild from "esbuild";
 import process from "process";
 import builtins from 'builtin-modules';
 import Vue from "@the_tree/esbuild-plugin-vue3";
+import { generateDtsBundle } from 'dts-bundle-generator';
+import { writeFileSync } from 'fs';
+import { join } from 'path';
 
 const banner =
     `/*
@@ -64,3 +67,26 @@ await esbuild.build({
     allowOverwrite: true,
     minify: false,
 });
+
+// 添加类型声明文件生成配置
+const dtsOptions = {
+    preferredConfigPath: './tsconfig.json',
+    followSymlinks: true,
+    exportAll: true,
+    includedFiles: ['node_modules/obsidian/obsidian.d.ts'], // 包含 obsidian 的类型声明
+};
+
+// 生成类型声明文件
+const [dtsOutput] = generateDtsBundle([
+    {
+        filePath: './src/main.ts', // 你的入口文件
+        output: {
+            noBanner: true,
+            exportReferencedTypes: true,
+        },
+        ...dtsOptions,
+    },
+]);
+
+// 写入生成的类型声明文件
+writeFileSync(join('dist', 'index.d.ts'), dtsOutput);

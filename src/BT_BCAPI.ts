@@ -3,7 +3,7 @@ import MyPlugin from "./better-breadcrumb";
 import { YAML } from "qql1-yaml";
 import { ModifyFile } from "obsidian-modify-file";
 import { get_all_files } from "breadcrumbs/src/graph/builders/explicit/files";
-import { BCEdge } from "graph/MyMultiGraph";
+import type { BCEdge } from "breadcrumbs/src/graph/MyMultiGraph";
 
 export interface TFileTree {
 	file: TFile;
@@ -17,7 +17,7 @@ interface EdgeWithPos extends BCEdge {
 
 export class BT_BCAPI {
 	constructor(private plugin: Plugin) {}
-	private static BT_BCAPI: BT_BCAPI = null;
+	private static BT_BCAPI: BT_BCAPI | null = null;
 	public static getBT_BCAPI(plugin: MyPlugin) {
 		if (BT_BCAPI.BT_BCAPI) return BT_BCAPI.BT_BCAPI;
 		BT_BCAPI.BT_BCAPI = new BT_BCAPI(plugin);
@@ -34,6 +34,7 @@ export class BT_BCAPI {
 			let node: TFileTree = { file: _TFile, children: [] };
 			let subTFiles = this.getAllTFileFromNoteByType(_TFile.path, type);
 			for (const subTFile of subTFiles) {
+				if (!subTFile) continue;
 				if (pathSet.has(subTFile.path)) continue;
 				node.children.push(
 					_fn(subTFile, structuredClone(pathSet).add(subTFile.path))
@@ -56,7 +57,7 @@ export class BT_BCAPI {
 				let rgx = new RegExp(
 					`transitive:\\[(.*?)\\] <- ${edge.attr.field}`
 				);
-				let explicitField = edge.attr.implied_kind.match(rgx)[1];
+				let explicitField = edge.attr.implied_kind.match(rgx)?.[1];
 				if (!explicitField) continue;
 				let newEdge: EdgeWithPos = structuredClone(edge);
 				let originLink = this.getOriginLinkByPath(
@@ -66,8 +67,9 @@ export class BT_BCAPI {
 				let pos = await this.getTypeLinkPos(
 					edge.target_id,
 					explicitField,
-					originLink
+					originLink ?? ""
 				);
+				if (pos === null) continue;
 				newEdge.target_attr.typePos = pos;
 				rst.push(newEdge);
 				continue;
@@ -81,8 +83,9 @@ export class BT_BCAPI {
 			let pos = await this.getTypeLinkPos(
 				edge.source_id,
 				edge.attr.field,
-				originLink
+				originLink ?? ""
 			);
+			if (pos === null) continue;
 			newEdge.source_attr.typePos = pos;
 			rst.push(newEdge);
 		}
@@ -90,6 +93,7 @@ export class BT_BCAPI {
 	}
 	private getOriginLinkByPath(sourcePath: string, targetPath: string) {
 		let cache = this.plugin.app.metadataCache.getCache(sourcePath);
+		if (!cache) return null;
 		let links = [
 			...(cache.links ?? []),
 			...(cache.embeds ?? []).map((v) => ({
@@ -97,16 +101,18 @@ export class BT_BCAPI {
 				link: v.link.split("#")[0],
 			})),
 		];
+
 		return links.find((link) => {
 			let file = this.plugin.app.metadataCache.getFirstLinkpathDest(
 				link.link,
 				sourcePath
 			);
-			return file.path === targetPath;
-		}).original;
+			return file?.path === targetPath;
+		})?.original;
 	}
 	private async getTypeLinkPos(id: string, field: string, link: string) {
 		let note = this.plugin.app.vault.getFileByPath(id);
+		if (!note) return null;
 		let content = await this.plugin.app.vault.cachedRead(note);
 		let frontmatter = getFrontMatterInfo(content);
 		if (frontmatter) {
@@ -143,10 +149,11 @@ export class BT_BCAPI {
 				})
 			)
 		).filter((x) => x);
-		let editor = this.plugin.app.workspace.activeEditor.editor;
+		let editor = this.plugin.app.workspace.activeEditor?.editor;
 		if (!editor) throw new Error("No active editor");
 		let rst = [];
-		for await (const { file, frontmatter } of _files) {
+		for await (let _file of _files) {
+			const { file, frontmatter } = _file!;
 			let doneFrontmatter = YAML.setFieldInYAML(
 				frontmatter.frontmatter,
 				BCField,
